@@ -87,12 +87,9 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Clean up  
-        uses: c-hive/gha-remove-artifacts@v1
 
       - uses: geekyeggo/delete-artifact@v2
         with:
-          age: '1 month'
           name: |
             server
             client
