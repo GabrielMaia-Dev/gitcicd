@@ -47,6 +47,7 @@ jobs:
           with:
             name: client
             path: /tmp/client.tar
+  
   test:
       needs:
         - build-client
@@ -81,3 +82,15 @@ jobs:
             docker load --input /tmp/server.tar
             docker load --input /tmp/client.tar
             docker image ls -a
+          
+  clear-artifacts:
+    needs: test
+    steps:
+    - name: Clean up  
+      uses: c-hive/gha-remove-artifacts@v1
+
+    - uses: geekyeggo/delete-artifact@v2
+      with:
+          name: |
+            server
+            client
