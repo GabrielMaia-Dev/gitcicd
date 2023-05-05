@@ -27,70 +27,71 @@ jobs:
           path: /tmp/server.tar
 
   build-client:
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-        - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-        - name: Build and export
-          uses: docker/build-push-action@v4
-          with:
-            context: ./client
-            tags: client:latest
-            outputs: type=docker,dest=/tmp/client.tar
+      - name: Build and export
+        uses: docker/build-push-action@v4
+        with:
+          context: ./client
+          tags: client:latest
+          outputs: type=docker,dest=/tmp/client.tar
 
-        - name: Upload artifact
-          uses: actions/upload-artifact@v3
-          with:
-            name: client
-            path: /tmp/client.tar
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: client
+          path: /tmp/client.tar
   
   test:
-      needs:
-        - build-client
-        - build-server
+    needs:
+      - build-client
+      - build-server
 
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v2
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-        - name: Download artifact
-          uses: actions/download-artifact@v3
-          with:
-            name: server
-            path: /tmp
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: server
+          path: /tmp
 
-        - name: Download server artifact
-          uses: actions/download-artifact@v3
-          with:
-            name: server
-            path: /tmp
+      - name: Download server artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: server
+          path: /tmp
 
-        - name: Download client artifact
-          uses: actions/download-artifact@v3
-          with:
-            name: client
-            path: /tmp
+      - name: Download client artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: client
+          path: /tmp
 
-        - name: Load images
-          run: |
-            docker load --input /tmp/server.tar
-            docker load --input /tmp/client.tar
-            docker image ls -a
+      - name: Load images
+        run: |
+          docker load --input /tmp/server.tar
+          docker load --input /tmp/client.tar
+          docker image ls -a
           
   clear-artifacts:
     needs: test
+    runs-on: ubuntu-latest
     steps:
-    - name: Clean up  
-      uses: c-hive/gha-remove-artifacts@v1
+      - name: Clean up  
+        uses: c-hive/gha-remove-artifacts@v1
 
-    - uses: geekyeggo/delete-artifact@v2
-      with:
+      - uses: geekyeggo/delete-artifact@v2
+        with:
           name: |
             server
             client
