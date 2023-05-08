@@ -1,16 +1,17 @@
-name: Test Server
+# name: Test Server
 
-on:
-  push:
-    paths:
-    - 'server/**'
+# on:
+#   push:
+#     paths:
+#     - 'server/**'
 
-jobs:
-  test-server:
-    runs-on: ubuntu-latest
+# jobs:
+#   test-server:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
+#     steps:
+#       - uses: actions/checkout@v3
 
-      - name: Run tests
-        run: echo "Server Test"
+#       - name: Run tests
+#         run: echo "Server Test"
+#         if:
