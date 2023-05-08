@@ -2,7 +2,7 @@ name: Test and build Client
 
 on:
   workflow_run:
-    workflows: ["test-server", "test-client"]
+    workflows: [test-server, test-client]
     types: [completed]
 
 jobs:
