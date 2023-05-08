@@ -1,0 +1,33 @@
+name: Teste
+
+on:
+  push:
+
+jobs:
+  test-server:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Verificar modificações
+        id: diff
+        run: echo ::set-output name=modified::$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
+
+      - name: Testar Server
+        if: ${{ steps.diff.outputs.modified == *'server/'* }}
+        run: echo "Executando testes do Server" && sleep 5
+
+  test-client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Verificar modificações
+        id: diff
+        run: echo ::set-output name=modified::$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
+
+      - name: Testar Client
+        if: ${{ steps.diff.outputs.modified == *'client/'* }}
+        run: echo "Executando testes do Client" && sleep 5
