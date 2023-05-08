@@ -1,9 +1,9 @@
-name: Test and build Client
+name: E2E Test
 
 on:
-  push:
-    paths:
-    - 'client/**'
+  workflow_run:
+    workflows: [Test Client, Test Server]
+    types: [completed]
 
 jobs:
   test-client:
