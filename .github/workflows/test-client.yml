@@ -1,0 +1,15 @@
+name: Test and build Client
+
+on:
+  push:
+    paths:
+    - 'client/**'
+
+jobs:
+  test-client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run tests
