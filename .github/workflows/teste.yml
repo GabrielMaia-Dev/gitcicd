@@ -9,10 +9,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Verificar modificações
         id: diff
-        run: echo modified=$(git diff --name-only ${{ github.event.before }}) >> $GITHUB_OUTPUT
+        run: echo modified=$(git diff --name-only  ${{ github.event.before }} ${{ github.event.after }}) >> $GITHUB_OUTPUT
 
       - name: Testar Server
         if: ${{ contains(steps.diff.outputs.modified, 'server/') }}
@@ -23,10 +25,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Verificar modificações
         id: diff
-        run: echo modified=$(git diff --name-only ${{ github.event.before }}) >> $GITHUB_OUTPUT
+        run: echo modified=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }}) >> $GITHUB_OUTPUT
 
       - name: Testar Client
         if: ${{ contains(steps.diff.outputs.modified, 'client/') }}
