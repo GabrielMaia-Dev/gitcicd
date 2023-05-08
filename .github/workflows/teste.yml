@@ -14,7 +14,7 @@ jobs:
 
       - name: Verificar modificações
         id: diff
-        run: echo modified=$(git diff --name-only  ${{ github.event.before }} ${{ github.event.after }}) >> $GITHUB_OUTPUT
+        run: echo modified=$(git diff --name-only  ${{ github.event.before }} ${{ github.event.after }} -- server/**) >> $GITHUB_OUTPUT
 
       - name: Testar Server
         if: ${{ contains(steps.diff.outputs.modified, 'server/') }}
@@ -30,7 +30,7 @@ jobs:
 
       - name: Verificar modificações
         id: diff
-        run: echo modified=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }}) >> $GITHUB_OUTPUT
+        run: echo modified=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} -- client/**) >> $GITHUB_OUTPUT
 
       - name: Testar Client
         if: ${{ contains(steps.diff.outputs.modified, 'client/') }}
