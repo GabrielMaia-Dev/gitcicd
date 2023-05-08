@@ -1,0 +1,16 @@
+name: Test and build Client
+
+on:
+  workflow_run:
+    workflows: ["test-server", "test-client"]
+    types: [completed]
+
+jobs:
+  test-client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run tests
+        run: echo "Client Test"
