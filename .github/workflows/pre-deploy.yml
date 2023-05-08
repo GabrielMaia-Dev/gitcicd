@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Build Server
-        run: echo "Build Client"
+        run: echo "Build Server"
 
   build-client:
     runs-on: ubuntu-latest
