@@ -1,0 +1,17 @@
+
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and export
+        uses: docker/build-push-action@v4
+        with:
+          context: ./client
+          tags: server:latest
+          outputs: type=docker,dest=/tmp/client.tar
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: server
+          path: /tmp/client.tar
